@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "115463601821",
+    "firebase_url": "https://shiva-shanker-traders-default-rtdb.firebaseio.com",
+    "project_id": "shiva-shanker-traders",
+    "storage_bucket": "shiva-shanker-traders.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:115463601821:android:8623f79910e539f6e9de74",
+        "android_client_info": {
+          "package_name": "com.company.salesCalculation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "115463601821-q3nqkfe5j3hd6vhcb080f9bhm74tb5na.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEHvZuxzwubDBg6t0iwFJGgt654OKBaTc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "115463601821-q3nqkfe5j3hd6vhcb080f9bhm74tb5na.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:115463601821:android:529d7670b601655be9de74",
+        "android_client_info": {
+          "package_name": "com.example.salescalculation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "115463601821-q3nqkfe5j3hd6vhcb080f9bhm74tb5na.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEHvZuxzwubDBg6t0iwFJGgt654OKBaTc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "115463601821-q3nqkfe5j3hd6vhcb080f9bhm74tb5na.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

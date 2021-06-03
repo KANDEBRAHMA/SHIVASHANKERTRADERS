@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">SST</string>
+    <string name="weight">Weight</string>
+    <string name="mm8">8mm</string>
+    <string name="mm10">10mm</string>
+    <string name="mm12">12mm</string>
+    <string name="mm16">16mm</string>
+    <string name="mm20">20mm</string>
+    <string name="date">Date</string>
+    <string name="cal">Calculate</string>
+    <string name="format">DD-MM-YYYY</string>
+    <string name="Weight">Enter Weight</string>
+    <string name="enter_weight">Enter Weight</string>
+    <string name="enter">Enter</string>
+    <string name="calculate">Calculate</string>
+    <string name="enter_qty">Enter Quantity</string>
+    <string name="enter_quantity">Enter Quantity</string>
+    <string name="insert">Insert</string>
+    <string name="calculate_here">Calculate here</string>
+    <string name="result">Result</string>
+    <string name="add">Add</string>
+    <string name="you_result_will_be_here">You Result Will be Here</string>
+    <string name="confirm">Confirm</string>
+    <string name="initialwt10">7.4</string>
+    <string name="initialwt8">4.74</string>
+    <string name="initialwt12">10.66</string>
+    <string name="initialwt16">18.96</string>
+    <string name="initialwt20">29.62</string>
+    <string name="bill_details">Bill Details</string>
+    <string name="total">Total</string>
+    <string name="enter_total_amount">Enter Total Amount</string>
+    <string name="bill_no">Bill No</string>
+    <string name="enter_bill_number">Enter Bill number</string>
+</resources>
