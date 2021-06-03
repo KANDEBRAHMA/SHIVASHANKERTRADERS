@@ -14,6 +14,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +41,7 @@ public class Calculation extends AppCompatActivity implements View.OnClickListen
     String getDate;
     DatabaseReference qty;
     Query query;
+    ProgressBar progressBar3;
 
     @Override
     public void onClick(View v) {
@@ -86,6 +88,7 @@ public class Calculation extends AppCompatActivity implements View.OnClickListen
         qty16 = findViewById(R.id.qty16);
         qty20 = findViewById(R.id.qty20);
         etTotal =findViewById(R.id.etTotal);
+        progressBar3 = findViewById(R.id.progressBar3);
 
         ivSub = findViewById(R.id.ivSub);
         ivAdd = findViewById(R.id.ivAdd);
@@ -102,6 +105,8 @@ public class Calculation extends AppCompatActivity implements View.OnClickListen
         linear6 = findViewById(R.id.linear6);
         linearDate = findViewById(R.id.linearDate);
         linear0 = findViewById(R.id.linear0);
+
+        progressBar3.setVisibility(View.GONE);
 
         //hideVisibility();
 
@@ -153,6 +158,7 @@ public class Calculation extends AppCompatActivity implements View.OnClickListen
                 }
                 else
                 {
+                    progressBar3.setVisibility(View.VISIBLE);
                     len8 += (qty8.getText().toString().isEmpty()) ? 0 : Integer.parseInt(qty8.getText().toString().trim());
                     len10 += (qty10.getText().toString().isEmpty()) ? 0 : Integer.parseInt(qty10.getText().toString().trim());
                     len12 += (qty12.getText().toString().isEmpty()) ? 0 : Integer.parseInt(qty12.getText().toString().trim());
@@ -208,6 +214,7 @@ public class Calculation extends AppCompatActivity implements View.OnClickListen
                     etTotal.getText().clear();
                     etDate.getText().clear();
                     etBill.getText().clear();
+                    progressBar3.setVisibility(View.GONE);
 
                     //hideVisibility();
                     //ivInsert.setImageResource(R.drawable.arrow_drop_down);

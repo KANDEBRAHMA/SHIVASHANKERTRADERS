@@ -12,6 +12,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -33,6 +34,7 @@ public class GenerateReports extends AppCompatActivity {
     int year,month,dayOfMonth;
     DatePickerDialog datePickerDialog;
     DatabaseReference report;
+    ProgressBar progressBar4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,9 @@ public class GenerateReports extends AppCompatActivity {
         ivDate = findViewById(R.id.ivDate);
         btnSubmit = findViewById(R.id.btnSubmit);
         listView = findViewById(R.id.listView);
+        progressBar4 = findViewById(R.id.progressBar4);
+
+        progressBar4.setVisibility(View.GONE);
 
         final ArrayList<String> report_list = new ArrayList<>();
         //final ArrayAdapter<String> adapter = new ArrayAdapter<String>(GenerateReports.this,R.layout.list,report_list);
@@ -55,6 +60,7 @@ public class GenerateReports extends AppCompatActivity {
                 }
                 else
                 {
+                    progressBar4.setVisibility(View.VISIBLE);
                     report = FirebaseDatabase.getInstance().getReference().child("Bill Details");
                     report.child(etListDate.getText().toString().trim()).addValueEventListener(new ValueEventListener() {
                         @Override
@@ -109,6 +115,7 @@ public class GenerateReports extends AppCompatActivity {
 
                         }
                     });
+                    progressBar4.setVisibility(View.GONE);
                 }
             }
         });

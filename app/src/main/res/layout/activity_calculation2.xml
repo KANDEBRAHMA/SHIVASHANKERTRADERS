@@ -494,6 +494,13 @@
                     android:focusable="true"
                     app:srcCompat="@drawable/add" />
 
+                <ProgressBar
+                    android:id="@+id/progressBar3"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
                 <ImageView
                     android:id="@+id/ivSub"
                     android:layout_width="30dp"

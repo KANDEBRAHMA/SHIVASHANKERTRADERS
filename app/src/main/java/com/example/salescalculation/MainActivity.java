@@ -12,6 +12,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     //CheckBox cb8, cb10, cb12, cb16, cb20;
     ImageView ivCement,ivSteel,ivCal,ivReport;
     DatabaseReference refer;
+    ProgressBar progressBar2;
 
 
     public void hideVisibility()
@@ -137,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
         call4 = findViewById(R.id.call4);
         call5 = findViewById(R.id.call5);
         llv1 = findViewById(R.id.llv1);
+        progressBar2 = findViewById(R.id.progressBar2);
 
         /*cb8 = findViewById(R.id.cb8);
         cb10 = findViewById(R.id.cb10);
@@ -147,11 +150,13 @@ public class MainActivity extends AppCompatActivity {
 
         hideVisibility();
 
+
         Toast.makeText(MainActivity.this, "Firebase Connection successful", Toast.LENGTH_SHORT).show();
 
         btnLoad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressBar2.setVisibility(View.VISIBLE);
                 refer = FirebaseDatabase.getInstance().getReference().child("SteelWeights").child("TATA STEEL");
                 refer.addValueEventListener(new ValueEventListener() {
                     @Override
@@ -168,6 +173,7 @@ public class MainActivity extends AppCompatActivity {
                         wt16.setText(weight16mm);
                         wt20.setText(weight20mm);
                         Toast.makeText(MainActivity.this,"Data Loaded Successfully!!",Toast.LENGTH_SHORT).show();
+                        progressBar2.setVisibility(View.GONE);
                     }
 
                     @Override
@@ -186,6 +192,7 @@ public class MainActivity extends AppCompatActivity {
                 {
                     ivCement.setVisibility(View.GONE);
                     ivReport.setVisibility(View.GONE);
+                    progressBar2.setVisibility(View.GONE);
                     changeVisibility();
 
                     /*
