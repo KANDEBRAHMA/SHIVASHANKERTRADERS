@@ -32,7 +32,7 @@ public class GenerateReports extends AppCompatActivity {
     Calendar calendar;
     int year,month,dayOfMonth;
     DatePickerDialog datePickerDialog;
-    DatabaseReference report,weight;
+    DatabaseReference report;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,12 +66,12 @@ public class GenerateReports extends AppCompatActivity {
                                 Toast.makeText(GenerateReports.this,"Retrieving Bill Details",Toast.LENGTH_SHORT).show();
                                 report_list.clear();
                                 report_list.add("-----------BILL DETAILS-----------"+etListDate.getText().toString().trim());
-                                report_list.add("DATE\t\t\tNUM\t\t8\t\t10\t\t12\t\t16\t\t20\t\t\t\tTOTAL");
+                                report_list.add("DATE\t\t\tNUM\t\t\t8\t\t\t10\t\t\t12\t\t\t16\t\t\t20\t\t\t\tTOTAL");
                                 for (DataSnapshot snapshot1 : snapshot.getChildren())
                                 {
                                     SteelQuantity qty = snapshot1.getValue(SteelQuantity.class);
-                                    String txt = qty.getBillDate()+" : "+qty.getBillNum()+"\t\t"+qty.getLength8mm()+"\t\t"+qty.getLength10mm()+"\t\t"+qty.getLength12mm()+"\t\t"
-                                            +qty.getLength16mm()+"\t\t"+qty.getLength20mm()+"\t\t\t"+qty.getBillAmount();
+                                    String txt = qty.getBillDate()+" : "+qty.getBillNum()+"\t\t\t"+qty.getLength8mm()+"\t\t\t"+qty.getLength10mm()+"\t\t\t"
+                                            +qty.getLength12mm()+"\t\t"+qty.getLength16mm()+"\t\t"+qty.getLength20mm()+"\t\t\t"+qty.getBillAmount();
                                     total8mm += qty.getLength8mm();
                                     total10mm += qty.getLength10mm();
                                     total12mm += qty.getLength12mm();
@@ -80,40 +80,19 @@ public class GenerateReports extends AppCompatActivity {
                                     totalamount += qty.getBillAmount();
                                     report_list.add(txt);
                                 }
-                                String finaltxt = "Total Quantity : \t"+total8mm+"\t\t"+total10mm+"\t\t"+total12mm+"\t\t"+total16mm+"\t\t"+total20mm+"\t\t"+totalamount;
+                                String finaltxt = "Total Quantity : \t"+total8mm+"\t\t\t"+total10mm+"\t\t\t"+total12mm+"\t\t\t"
+                                        +total16mm+"\t\t\t"+total20mm+"\t\t\t"+totalamount;
                                 report_list.add(finaltxt);
-                                weight = FirebaseDatabase.getInstance().getReference().child("SteelWeights").child("TATA STEEL");
-                                int finalTotal8mm = total8mm;
-                                int finalTotal10mm = total10mm;
-                                int finalTotal12mm = total12mm;
-                                int finalTotal16mm = total16mm;
-                                int finalTotal20mm = total20mm;
-                                double finalTotalamount = totalamount;
-                                weight.addValueEventListener(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                        double finalweight8=0,finalweight10=0,finalweight12=0,finalweight16=0,finalweight20;
-                                        if (snapshot.exists())
-                                        {
-                                            for (DataSnapshot snapweight : snapshot.getChildren())
-                                            {
-                                                SteelWeights weights = snapweight.getValue(SteelWeights.class);
-                                                finalweight8 = weights.getWeight8mm()* finalTotal8mm;
-                                                finalweight10 = weights.getWeight10mm()* finalTotal10mm;
-                                                finalweight12 = weights.getWeight12mm()* finalTotal12mm;
-                                                finalweight16 = weights.getWeight16mm()* finalTotal16mm;
-                                                finalweight20 = weights.getWeight20mm()* finalTotal20mm;
-                                            }
-                                            String finalweights = "Total Weights : \t"+finalTotal8mm+"\t\t"+finalTotal10mm+"\t\t"+finalTotal12mm+"\t\t"+finalTotal16mm+"\t\t"+finalTotal20mm+"\t\t"+ finalTotalamount;
-                                            report_list.add(finalweights);
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError error) {
-
-                                    }
-                                });
+                                double finalTotal8mm = (total8mm*4.74);
+                                double finalTotal10mm = (total10mm*7.4);
+                                double finalTotal12mm = (total12mm*10.66);
+                                double finalTotal16mm = (total16mm*18.96);
+                                double finalTotal20mm = (total20mm*29.62);
+                                double finalTotalamount = (finalTotal8mm+finalTotal10mm+finalTotal12mm+finalTotal16mm+finalTotal20mm);
+                                String finalweights = "\t\t\t\t\t8MM : " + finalTotal8mm + "\n\n\t\t\t\t\t10MM: " + finalTotal10mm + "\n\n\t\t\t\t\t12MM : "
+                                                        + finalTotal12mm + "\n\n\t\t\t\t\t16MM : " + finalTotal16mm + "\n\n\t\t\t\t\t20MM : " + finalTotal20mm +
+                                                        "\n\n\t\t\t\t\tTotal Weights : " + finalTotalamount;
+                                report_list.add(finalweights);
                                 ReportAdapter reportAdapter = new ReportAdapter(GenerateReports.this,report_list);
                                 listView.setAdapter(reportAdapter);
                                 reportAdapter.notifyDataSetChanged();
@@ -123,7 +102,6 @@ public class GenerateReports extends AppCompatActivity {
                                 Toast.makeText(GenerateReports.this,"Please Enter a valid Bill Date",Toast.LENGTH_SHORT).show();
                                 etListDate.getText().clear();
                             }
-
                         }
 
                         @Override
@@ -150,6 +128,11 @@ public class GenerateReports extends AppCompatActivity {
                             }
                         },year,month,dayOfMonth);
                 datePickerDialog.show();
+                report_list.clear();
+                etListDate.getText().clear();
+                ReportAdapter reportAdapter = new ReportAdapter(GenerateReports.this,report_list);
+                listView.setAdapter(reportAdapter);
+                reportAdapter.notifyDataSetChanged();
             }
         });
     }

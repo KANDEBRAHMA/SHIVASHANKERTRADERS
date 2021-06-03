@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                 hideVisibility();
                 ivCement.setVisibility(View.VISIBLE);
                 ivSteel.setVisibility(View.VISIBLE);
-
+                ivReport.setVisibility(View.VISIBLE);
             }
         }
     }

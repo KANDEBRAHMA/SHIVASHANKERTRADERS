@@ -9,11 +9,6 @@ public class SteelWeights
     private double weight20mm;
 
     public SteelWeights() {
-        weight8mm=0;
-        weight10mm=0;
-        weight12mm=0;
-        weight16mm=0;
-        weight20mm=0;
     }
 
     public double getWeight8mm() {
