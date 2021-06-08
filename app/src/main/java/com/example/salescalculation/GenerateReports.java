@@ -102,11 +102,13 @@ public class GenerateReports extends AppCompatActivity {
                                 ReportAdapter reportAdapter = new ReportAdapter(GenerateReports.this,report_list);
                                 listView.setAdapter(reportAdapter);
                                 reportAdapter.notifyDataSetChanged();
+                                progressBar4.setVisibility(View.GONE);
                             }
                             else
                             {
                                 Toast.makeText(GenerateReports.this,"Please Enter a valid Bill Date",Toast.LENGTH_SHORT).show();
                                 etListDate.getText().clear();
+                                progressBar4.setVisibility(View.GONE);
                             }
                         }
 
@@ -115,7 +117,6 @@ public class GenerateReports extends AppCompatActivity {
 
                         }
                     });
-                    progressBar4.setVisibility(View.GONE);
                 }
             }
         });

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.arch.core.executor.TaskExecutor;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,16 +26,22 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.hbb20.CountryCodePicker;
 
 import java.util.concurrent.TimeUnit;
 
 public class LoginActivity extends AppCompatActivity {
 
-    EditText PhoneNumber,etOtp;
-    Button btnOTP,btnLogin;
-    private FirebaseAuth mAuth;
-    ProgressBar progressBar;
-    String verificationCodebySystem;
+    EditText PhoneNumber;
+    Button btnOTP;
+    CountryCodePicker ccp;
+    FirebaseAuth auth;
+    String number;
+    EditText etOTP;
+    Button btnVerify;
+    String otpid;
+    ProgressDialog progress;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,19 +49,22 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login2);
 
         PhoneNumber = findViewById(R.id.PhoneNumber);
-        etOtp = findViewById(R.id.etOtp);
-        btnLogin = findViewById(R.id.btnLogin);
+        ccp = findViewById(R.id.ccp);
         btnOTP = findViewById(R.id.btnOTP);
+        ccp.registerCarrierNumberEditText(PhoneNumber);
+        auth = FirebaseAuth.getInstance();
+        btnVerify=findViewById(R.id.btnVerify);
+        etOTP = findViewById(R.id.etOTP);
 
-        etOtp.setVisibility(View.GONE);
-        btnLogin.setVisibility(View.GONE);
-        progressBar = findViewById(R.id.progressBar);
-
-        mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        //updateUI(currentUser);
-        progressBar.setVisibility(View.GONE);
-
+        if (auth.getCurrentUser()!=null)
+        {
+            progress = new ProgressDialog(this);
+            progress.setTitle("Logging the User");
+            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progress.setProgress(0);
+            progress.show();
+            startActivity( new Intent(LoginActivity.this,MainActivity.class));
+        }
 
         btnOTP.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,76 +81,81 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    sendOTP(PhoneNumber.getText().toString().trim());
-                    etOtp.setVisibility(View.VISIBLE);
-                    btnOTP.setText("Login");
+                    number = ccp.getFullNumberWithPlus().trim();
+                    initiateotp();
+                    btnOTP.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        btnVerify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (etOTP.getText().toString().isEmpty())
+                {
+                    Toast.makeText(LoginActivity.this,"Field must not be empty",Toast.LENGTH_LONG).show();
+                }
+                else if (etOTP.getText().toString().length()!=6)
+                {
+                    Toast.makeText(LoginActivity.this,"Invalid OTP",Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    PhoneAuthCredential credential = PhoneAuthProvider.getCredential(otpid,etOTP.getText().toString());
+                    signInWithPhoneAuthCredential(credential);
                 }
             }
         });
     }
 
-
-
-    private void sendOTP(String phno){
+    private void initiateotp() {
         PhoneAuthOptions options =
-                PhoneAuthOptions.newBuilder(mAuth)
-                        .setPhoneNumber("+91"+phno)       // Phone number to verify
+                PhoneAuthOptions.newBuilder(auth)
+                        .setPhoneNumber("+"+number)       // Phone number to verify
                         .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
                         .setActivity(this)                 // Activity (for callback binding)
-                        .setCallbacks(mCallbacks)          // OnVerificationStateChangedCallbacks
+                        .setCallbacks(new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+
+                            @Override
+                            public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken)
+                            {
+                                otpid=s;
+                            }
+
+                            @Override
+                            public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
+                                final String code = phoneAuthCredential.getSmsCode();
+                                if (code != null) {
+                                    etOTP.setText(code);
+                                    PhoneAuthCredential credential = PhoneAuthProvider.getCredential(otpid,code);
+                                    signInWithPhoneAuthCredential(phoneAuthCredential);
+                                }
+
+                            }
+
+                            @Override
+                            public void onVerificationFailed(@NonNull FirebaseException e) {
+                                Toast.makeText(LoginActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
+                            }
+                        })          // OnVerificationStateChangedCallbacks
                         .build();
         PhoneAuthProvider.verifyPhoneNumber(options);
     }
 
-    private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-        @Override
-        public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
-            super.onCodeSent(s, forceResendingToken);
-
-            verificationCodebySystem =s;
-        }
-
-        @Override
-        public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
-            String code = phoneAuthCredential.getSmsCode();
-            if (code!=null)
-            {
-                etOtp.setText(code);
-                progressBar.setVisibility(View.VISIBLE);
-                verifyCode(code);
-            }
-
-        }
-
-        @Override
-        public void onVerificationFailed(@NonNull FirebaseException e) {
-            Toast.makeText(LoginActivity.this,"Failing "+e.getMessage(),Toast.LENGTH_SHORT).show();
-        }
-    };
-
-    private void verifyCode(String verificationCode)
-    {
-        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationCodebySystem,verificationCode);
-        signInByCredential(credential);
+    private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
+        auth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful())
+                        {
+                            startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                        }
+                        else
+                        {
+                            Toast.makeText(LoginActivity.this,task.getException().getMessage(),Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
     }
-
-    private void signInByCredential(PhoneAuthCredential credential) {
-        mAuth.signInWithCredential(credential).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful())
-                {
-                    Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
-                }
-                else
-                {
-                    Toast.makeText(LoginActivity.this,task.getException().getMessage(),Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
-
-
 }

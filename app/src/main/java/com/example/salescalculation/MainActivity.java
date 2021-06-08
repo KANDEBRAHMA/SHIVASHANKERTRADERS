@@ -21,6 +21,7 @@ import org.jetbrains.annotations.Nullable;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,7 +32,7 @@ import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView tvWeight, tv8mm, tv10mm, tv12mm, tv16mm, tv20mm,tvResult,tvCalculate;
+    TextView tvWeight, tv8mm, tv10mm, tv12mm, tv16mm, tv20mm,tvResult,tvCalculate,tvWelcome;
     EditText wt8, wt10, wt12, wt16, wt20, date;
     LinearLayout call1,call2,call3,call4,call5,llv1;
     Button btnLoad;
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView ivCement,ivSteel,ivCal,ivReport;
     DatabaseReference refer;
     ProgressBar progressBar2;
+    FirebaseAuth auth;
 
 
     public void hideVisibility()
@@ -139,16 +141,14 @@ public class MainActivity extends AppCompatActivity {
         call4 = findViewById(R.id.call4);
         call5 = findViewById(R.id.call5);
         llv1 = findViewById(R.id.llv1);
+        tvWelcome = findViewById(R.id.tvWelcome);
         progressBar2 = findViewById(R.id.progressBar2);
 
-        /*cb8 = findViewById(R.id.cb8);
-        cb10 = findViewById(R.id.cb10);
-        cb12 = findViewById(R.id.cb12);
-        cb16 = findViewById(R.id.cb16);
-        cb20 = findViewById(R.id.cb20);*/
         btnLoad = findViewById(R.id.btnLoad);
 
         hideVisibility();
+
+        tvWelcome.setText("Welcome "+auth.getInstance().getCurrentUser().getPhoneNumber());
 
 
         Toast.makeText(MainActivity.this, "Firebase Connection successful", Toast.LENGTH_SHORT).show();
@@ -194,14 +194,6 @@ public class MainActivity extends AppCompatActivity {
                     ivReport.setVisibility(View.GONE);
                     progressBar2.setVisibility(View.GONE);
                     changeVisibility();
-
-                    /*
-                    cb8.setChecked(false);
-                    cb10.setChecked(false);
-                    cb12.setChecked(false);
-                    cb16.setChecked(false);
-                    cb20.setChecked(false);
-                    */
 
                     wt8.getText().clear();
                     wt10.getText().clear();
@@ -274,90 +266,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(report_intent);
             }
         });
-
-
-        /*
-        cb8.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boolean checked = ((CheckBox) v).isChecked();
-
-                if (checked)
-                {
-                    wt8.setText(R.string.initialwt8);
-                }
-                else
-                {
-                    wt8.getText().clear();
-                }
-            }
-        });
-
-
-        cb10.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boolean checked = ((CheckBox) v).isChecked();
-
-                if (checked)
-                {
-                    wt10.setText(R.string.initialwt10);
-                }
-                else
-                {
-                    wt10.getText().clear();
-                }
-            }
-        });
-
-        cb12.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boolean checked = ((CheckBox) v).isChecked();
-
-                if (checked)
-                {
-                    wt12.setText(R.string.initialwt12);
-                }
-                else
-                {
-                    wt12.getText().clear();
-                }
-            }
-        });
-
-        cb16.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boolean checked = ((CheckBox) v).isChecked();
-
-                if (checked)
-                {
-                    wt16.setText(R.string.initialwt16);
-                }
-                else
-                {
-                    wt16.getText().clear();
-                }
-            }
-        });
-
-        cb20.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boolean checked = ((CheckBox) v).isChecked();
-
-                if (checked)
-                {
-                    wt20.setText(R.string.initialwt20);
-                }
-                else
-                {
-                    wt20.getText().clear();
-                }
-            }
-        });
-        */
 
     }
 

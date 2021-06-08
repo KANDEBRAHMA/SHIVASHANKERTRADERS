@@ -6,34 +6,43 @@
     android:layout_height="match_parent"
     android:layout_marginTop="10dp"
     android:orientation="vertical"
+    android:gravity="center"
     tools:context=".LoginActivity">
 
-    <EditText
-        android:id="@+id/PhoneNumber"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="70dp"
-        android:layout_marginLeft="70dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="70dp"
-        android:layout_marginRight="70dp"
-        android:ems="10"
-        android:hint="Enter Phone Number"
-        android:inputType="number"
-        android:textStyle="bold" />
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:orientation="horizontal">
+
+        <com.hbb20.CountryCodePicker
+            android:id="@+id/ccp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
+        </com.hbb20.CountryCodePicker>
+
+        <EditText
+            android:id="@+id/PhoneNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Enter Phone Number"
+            android:inputType="number"
+            android:layout_marginTop="5dp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
     <EditText
-        android:id="@+id/etOtp"
+        android:id="@+id/etOTP"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="70dp"
-        android:layout_marginLeft="70dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="70dp"
-        android:layout_marginRight="70dp"
         android:ems="10"
-        android:hint="Enter OTP"
-        android:inputType="number" />
+        android:inputType="textPersonName"
+        android:layout_marginLeft="100dp"
+        android:layout_marginRight="100dp"
+        android:layout_marginTop="10dp"
+        android:hint="Enter OTP"/>
 
     <Button
         android:id="@+id/btnOTP"
@@ -47,10 +56,11 @@
         android:text="GET OTP"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:backgroundTint="#FF6D00" />
+        app:backgroundTint="#FF6D00"
+        app:cornerRadius="6dp" />
 
     <Button
-        android:id="@+id/btnLogin"
+        android:id="@+id/btnVerify"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
@@ -58,19 +68,9 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="100dp"
         android:layout_marginRight="100dp"
-        android:text="LOGIN"
-        android:textSize="18sp"
+        android:backgroundTint="#FF6D00"
+        android:text="Verify"
         android:textStyle="bold"
-        app:backgroundTint="#FF6D00" />
+        app:cornerRadius="6dp" />
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginRight="50dp" />
 </LinearLayout>
