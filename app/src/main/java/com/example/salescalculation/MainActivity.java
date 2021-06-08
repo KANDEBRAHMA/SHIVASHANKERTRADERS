@@ -1,7 +1,11 @@
 package com.example.salescalculation;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -42,8 +46,8 @@ public class MainActivity extends AppCompatActivity {
     //CheckBox cb8, cb10, cb12, cb16, cb20;
     ImageView ivCement,ivSteel,ivCal,ivReport;
     DatabaseReference refer;
-    ProgressBar progressBar2;
     FirebaseAuth auth;
+    ProgressDialog progress;
 
 
     public void hideVisibility()
@@ -142,7 +146,6 @@ public class MainActivity extends AppCompatActivity {
         call5 = findViewById(R.id.call5);
         llv1 = findViewById(R.id.llv1);
         tvWelcome = findViewById(R.id.tvWelcome);
-        progressBar2 = findViewById(R.id.progressBar2);
 
         btnLoad = findViewById(R.id.btnLoad);
 
@@ -179,7 +182,11 @@ public class MainActivity extends AppCompatActivity {
         btnLoad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressBar2.setVisibility(View.VISIBLE);
+                progress = new ProgressDialog(MainActivity.this);
+                progress.setTitle("Loading Weights");
+                progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progress.setProgress(0);
+                progress.show();
                 refer = FirebaseDatabase.getInstance().getReference().child("SteelWeights").child("TATA STEEL");
                 refer.addValueEventListener(new ValueEventListener() {
                     @Override
@@ -196,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
                         wt16.setText(weight16mm);
                         wt20.setText(weight20mm);
                         Toast.makeText(MainActivity.this,"Data Loaded Successfully!!",Toast.LENGTH_SHORT).show();
-                        progressBar2.setVisibility(View.GONE);
+                        progress.dismiss();
                     }
 
                     @Override
@@ -215,7 +222,6 @@ public class MainActivity extends AppCompatActivity {
                 {
                     ivCement.setVisibility(View.GONE);
                     ivReport.setVisibility(View.GONE);
-                    progressBar2.setVisibility(View.GONE);
                     changeVisibility();
 
                     wt8.getText().clear();
@@ -298,7 +304,7 @@ public class MainActivity extends AppCompatActivity {
         super.onBackPressed();
         if (ivCement.getVisibility() == View.VISIBLE && ivSteel.getVisibility() == View.VISIBLE)
         {
-            finish();
+            finishAffinity();
         }
         else
         {

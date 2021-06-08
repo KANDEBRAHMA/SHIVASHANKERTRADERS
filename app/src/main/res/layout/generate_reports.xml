@@ -27,23 +27,14 @@
             android:layout_marginRight="15dp"
             android:layout_marginBottom="5dp"
             android:layout_weight="1"
+            android:clickable="true"
+            android:drawableRight="@drawable/ic_schedule"
+            android:drawablePadding="15dp"
             android:ems="10"
             android:hint="Enter Date"
             android:inputType="textPersonName"
             android:textStyle="bold" />
 
-        <ImageView
-            android:id="@+id/ivDate"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="5dp"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/ic_schedule" />
     </LinearLayout>
 
     <Button
@@ -63,17 +54,6 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:backgroundTint="#FF6D00" />
-
-    <ProgressBar
-        android:id="@+id/progressBar4"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp" />
 
     <ListView
         android:id="@+id/listView"

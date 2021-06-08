@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -41,7 +42,7 @@ public class Calculation extends AppCompatActivity implements View.OnClickListen
     String getDate;
     DatabaseReference qty;
     Query query;
-    ProgressBar progressBar3;
+    ProgressDialog progress;
 
     @Override
     public void onClick(View v) {
@@ -88,14 +89,12 @@ public class Calculation extends AppCompatActivity implements View.OnClickListen
         qty16 = findViewById(R.id.qty16);
         qty20 = findViewById(R.id.qty20);
         etTotal =findViewById(R.id.etTotal);
-        progressBar3 = findViewById(R.id.progressBar3);
 
         ivSub = findViewById(R.id.ivSub);
         ivAdd = findViewById(R.id.ivAdd);
         //ivInsert = findViewById(R.id.ivInsert);
         tvAdd = findViewById(R.id.tvAdd);
         tvSubmit =findViewById(R.id.tvSubmit);
-        ivCalendar = findViewById(R.id.ivCalendar);
 
         linear1 = findViewById(R.id.linear1);
         linear2 = findViewById(R.id.linear2);
@@ -106,11 +105,10 @@ public class Calculation extends AppCompatActivity implements View.OnClickListen
         linearDate = findViewById(R.id.linearDate);
         linear0 = findViewById(R.id.linear0);
 
-        progressBar3.setVisibility(View.GONE);
 
         //hideVisibility();
 
-        ivCalendar.setOnClickListener(new View.OnClickListener() {
+        etDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 calendar = Calendar.getInstance();
@@ -158,7 +156,11 @@ public class Calculation extends AppCompatActivity implements View.OnClickListen
                 }
                 else
                 {
-                    progressBar3.setVisibility(View.VISIBLE);
+                    progress = new ProgressDialog(Calculation.this);
+                    progress.setTitle("Inserting Bill Details");
+                    progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    progress.setProgress(0);
+                    progress.show();
                     len8 += (qty8.getText().toString().isEmpty()) ? 0 : Integer.parseInt(qty8.getText().toString().trim());
                     len10 += (qty10.getText().toString().isEmpty()) ? 0 : Integer.parseInt(qty10.getText().toString().trim());
                     len12 += (qty12.getText().toString().isEmpty()) ? 0 : Integer.parseInt(qty12.getText().toString().trim());
@@ -214,7 +216,7 @@ public class Calculation extends AppCompatActivity implements View.OnClickListen
                     etTotal.getText().clear();
                     etDate.getText().clear();
                     etBill.getText().clear();
-                    progressBar3.setVisibility(View.GONE);
+                    progress.dismiss();
 
                     //hideVisibility();
                     //ivInsert.setImageResource(R.drawable.arrow_drop_down);

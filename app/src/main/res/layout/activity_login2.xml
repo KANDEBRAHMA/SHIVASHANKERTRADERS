@@ -7,6 +7,7 @@
     android:layout_marginTop="10dp"
     android:orientation="vertical"
     android:gravity="center"
+    android:scrollbars="vertical"
     tools:context=".LoginActivity">
 
     <LinearLayout

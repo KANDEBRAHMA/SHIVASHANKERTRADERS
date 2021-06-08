@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -27,14 +28,13 @@ import java.util.Calendar;
 public class GenerateReports extends AppCompatActivity {
 
     EditText etListDate;
-    ImageView ivDate;
     Button btnSubmit;
     ListView listView;
     Calendar calendar;
     int year,month,dayOfMonth;
     DatePickerDialog datePickerDialog;
     DatabaseReference report;
-    ProgressBar progressBar4;
+    ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +42,8 @@ public class GenerateReports extends AppCompatActivity {
         setContentView(R.layout.generate_reports);
 
         etListDate = findViewById(R.id.etListDate);
-        ivDate = findViewById(R.id.ivDate);
         btnSubmit = findViewById(R.id.btnSubmit);
         listView = findViewById(R.id.listView);
-        progressBar4 = findViewById(R.id.progressBar4);
-
-        progressBar4.setVisibility(View.GONE);
 
         final ArrayList<String> report_list = new ArrayList<>();
         //final ArrayAdapter<String> adapter = new ArrayAdapter<String>(GenerateReports.this,R.layout.list,report_list);
@@ -60,7 +56,11 @@ public class GenerateReports extends AppCompatActivity {
                 }
                 else
                 {
-                    progressBar4.setVisibility(View.VISIBLE);
+                    progress = new ProgressDialog(GenerateReports.this);
+                    progress.setTitle("Retrieving Bill Details");
+                    progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    progress.setProgress(0);
+                    progress.show();
                     report = FirebaseDatabase.getInstance().getReference().child("Bill Details");
                     report.child(etListDate.getText().toString().trim()).addValueEventListener(new ValueEventListener() {
                         @Override
@@ -102,13 +102,13 @@ public class GenerateReports extends AppCompatActivity {
                                 ReportAdapter reportAdapter = new ReportAdapter(GenerateReports.this,report_list);
                                 listView.setAdapter(reportAdapter);
                                 reportAdapter.notifyDataSetChanged();
-                                progressBar4.setVisibility(View.GONE);
+                                progress.dismiss();
                             }
                             else
                             {
                                 Toast.makeText(GenerateReports.this,"Please Enter a valid Bill Date",Toast.LENGTH_SHORT).show();
                                 etListDate.getText().clear();
-                                progressBar4.setVisibility(View.GONE);
+                                progress.dismiss();
                             }
                         }
 
@@ -121,7 +121,7 @@ public class GenerateReports extends AppCompatActivity {
             }
         });
 
-        ivDate.setOnClickListener(new View.OnClickListener() {
+        etListDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 calendar = Calendar.getInstance();

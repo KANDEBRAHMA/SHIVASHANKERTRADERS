@@ -70,12 +70,14 @@
 
                 <EditText
                     android:id="@+id/etDate"
-                    android:layout_width="170dp"
+                    android:layout_width="220dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginEnd="15dp"
                     android:layout_marginRight="15dp"
+                    android:clickable="true"
+                    android:drawableRight="@drawable/ic_schedule"
                     android:ems="10"
                     android:gravity="center_horizontal"
                     android:hint="@string/format"
@@ -87,17 +89,6 @@
                     android:paddingRight="20dp"
                     android:textStyle="bold"
                     tools:ignore="TextFields" />
-
-                <ImageView
-                    android:id="@+id/ivCalendar"
-                    android:layout_width="35dp"
-                    android:layout_height="40dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginRight="5dp"
-                    android:clickable="true"
-                    app:srcCompat="@drawable/ic_schedule" />
 
             </LinearLayout>
         </LinearLayout>
@@ -131,7 +122,7 @@
 
             <EditText
                 android:id="@+id/etBill"
-                android:layout_width="170dp"
+                android:layout_width="220dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginLeft="15dp"
@@ -173,7 +164,7 @@
 
             <EditText
                 android:id="@+id/qty8"
-                android:layout_width="170dp"
+                android:layout_width="220dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginLeft="15dp"
@@ -226,7 +217,7 @@
 
                 <EditText
                     android:id="@+id/qty10"
-                    android:layout_width="170dp"
+                    android:layout_width="220dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginLeft="15dp"
@@ -280,7 +271,7 @@
 
                 <EditText
                     android:id="@+id/qty12"
-                    android:layout_width="170dp"
+                    android:layout_width="220dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginLeft="15dp"
@@ -334,7 +325,7 @@
 
                 <EditText
                     android:id="@+id/qty16"
-                    android:layout_width="170dp"
+                    android:layout_width="220dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginLeft="15dp"
@@ -388,7 +379,7 @@
 
                 <EditText
                     android:id="@+id/qty20"
-                    android:layout_width="170dp"
+                    android:layout_width="220dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginLeft="15dp"
@@ -442,7 +433,7 @@
 
                 <EditText
                     android:id="@+id/etTotal"
-                    android:layout_width="170dp"
+                    android:layout_width="220dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginLeft="15dp"
@@ -493,13 +484,6 @@
                     android:contentDescription="@string/add"
                     android:focusable="true"
                     app:srcCompat="@drawable/add" />
-
-                <ProgressBar
-                    android:id="@+id/progressBar3"
-                    style="?android:attr/progressBarStyle"
-                    android:layout_width="20dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
 
                 <ImageView
                     android:id="@+id/ivSub"
