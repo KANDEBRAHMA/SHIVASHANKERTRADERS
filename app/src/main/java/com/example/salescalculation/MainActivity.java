@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnLoad;
     final int result=1;
     double final1length8,final1length10,final1length12,final1length16,final1length20,wei8,wei10,wei12,wei16,wei20,total;
-    String date1;
+    String date1,number,user;
     //CheckBox cb8, cb10, cb12, cb16, cb20;
     ImageView ivCement,ivSteel,ivCal,ivReport;
     DatabaseReference refer;
@@ -148,7 +148,30 @@ public class MainActivity extends AppCompatActivity {
 
         hideVisibility();
 
-        tvWelcome.setText("Welcome "+auth.getInstance().getCurrentUser().getPhoneNumber());
+        number = auth.getInstance().getCurrentUser().getPhoneNumber();
+
+        if (number.equals("+919502700479"))
+        {
+            user = "Harishanker Brahma";
+        }
+        else if (number.equals("+919059781551") || number.equals("+919440720047"))
+        {
+            user = "Bhasker Shetty";
+        }
+        else if (number.equals("+919866263479"))
+        {
+            user = "Preethi";
+        }
+        else if (number.equals("+919440205709")||number.equals("+919059200709"))
+        {
+            user = "Jyothi Babu";
+        }
+        else
+        {
+            user = "New User";
+        }
+
+        tvWelcome.setText("Welcome "+user);
 
 
         Toast.makeText(MainActivity.this, "Firebase Connection successful", Toast.LENGTH_SHORT).show();
