@@ -151,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
 
         hideVisibility();
 
+        /*
         number = auth.getInstance().getCurrentUser().getPhoneNumber();
 
         if (number.equals("+919502700479"))
@@ -174,8 +175,9 @@ public class MainActivity extends AppCompatActivity {
             user = "New User";
         }
 
-        tvWelcome.setText("Welcome "+user);
 
+        tvWelcome.setText("Welcome "+user);
+         */
 
         Toast.makeText(MainActivity.this, "Firebase Connection successful", Toast.LENGTH_SHORT).show();
 
